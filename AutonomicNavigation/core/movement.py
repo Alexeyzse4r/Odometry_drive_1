@@ -50,7 +50,7 @@ class MovementSystem(object):
         res += f"bl_wheel_speed      : {self.__bl_wheel_speed},\n"
         res += f"br_wheel_speed      : {self.__br_wheel_speed},\n"
         res += f"fl_wheel_speed      : {self.__fl_wheel_speed},\n"
-        res += f"fr_wheel_speed      : {self.__fr_wheel_speed},\n"
+        res += f"fr_wheel_speed      : {self.__fr_wheel_speed}\n"
         return res
 
     __str__ = __repr__
@@ -112,7 +112,7 @@ class MovementSystem(object):
         if self.__fl_wheel_speed_port == -1:
             print('unassigned : fl_wheel_speed_port')
             return False
-        if self.__fr_speed_speed_port == -1:
+        if self.__fr_wheel_speed_port == -1:
             print('unassigned : fr_speed_speed_port')
             return False
 
@@ -262,26 +262,26 @@ class MovementSystem(object):
     def front_right_wheel_direction(self, speed: int) -> None:
         self.__fr_wheel_direction = min(max(0, speed), 1)
 
-    def set_up_wheels_directions_ports(self, bl, br, fl, fr):
+    def set_up_wheels_directions_ports(self, bl, br, fl, fr) -> None:
         self.back_left_wheel_dir_port = bl
         self.back_right_wheel_dir_port = br
         self.front_left_wheel_dir_port = fl
         self.front_right_wheel_dir_port = fr
 
-    def set_up_wheels_speed_ports(self, bl, br, fl, fr):
+    def set_up_wheels_speed_ports(self, bl, br, fl, fr) -> None:
         self.back_left_wheel_speed_port = bl
         self.back_right_wheel_speed_port = br
         self.front_left_wheel_speed_port = fl
         self.front_right_wheel_speed_port = fr
 
-    def set_up_raspberry(self):
+    def set_up_raspberry(self) -> None:
         try:
             self.__is_raspberry_ok = True
             # any raspberry set up stuff
         except RuntimeError("Raspberry set up failed"):
             self.__is_raspberry_ok = False
 
-    def main_movement_loop(self):
+    def main_movement_loop(self) -> None:
         if not self.is_valid():
             raise RuntimeError("Incorrect system set up!!!")
         while True:
